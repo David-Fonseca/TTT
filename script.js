@@ -26,7 +26,7 @@ const displayControl =(() => {
     const messageSlot = document.getElementById('message');
     
     gameGrid.forEach((field)=>field.addEventListener('click',(e)=>{
-        console.log('here')
+        
         if(gameControl.getOver()==true||e.target.textContent!=="") return;
         gameControl.playRound(parseInt(e.target.dataset.index));
         updateGameboard();
@@ -43,20 +43,23 @@ const displayControl =(() => {
 
     const updateGameboard=()=>{
         for (let i = 0; i<gameGrid.length;i++){
-            gameGrid[i].textContent = gameGrid.getField(i);
+            gameGrid[i].textContent = gameBoard.getField(i);
         }
     }
 
     const setResultMessage = (winner) =>{
+        console.log({winner});
         if (winner === 'Draw'){
             setMessage('Its a Draw');
         }
         else{
+            console.log('here')
             setMessage(`Player: ${winner} won`);
         }
     }
     const setMessage = (message)=>{
-        messageSlot.textContent(message);
+        console.log({message})
+        messageSlot.textContent=message;
     }
     return {setResultMessage, setMessage};
 })();
@@ -74,13 +77,16 @@ const gameControl =(()=>{
     const playRound=(index)=>{
         gameBoard.setField(index, getActivePlayer().getSign());
         checkWinner();
-        checkDraw();
-        displayControl.setMessage(`${getActivePlayer.getName()}'s turn`)
         round++;
+        checkDraw();
+        if(!over){
+            displayControl.setMessage(`${getActivePlayer().getName()}'s turn`)
+        }
     }
     const checkDraw = () => {
-        if (round == 9){
+        if (round == 10){
             over = true;
+            displayControl.setResultMessage('Draw');
         }
     }
     const checkWinner = () => {
@@ -128,15 +134,18 @@ const gameControl =(()=>{
         }
     }
     if(count == 3){
+        
+        displayControl.setResultMessage(`${getActivePlayer().getName()}`);
         over=true;
-        displayControl.setResultMessage(`${getActivePlayer().getName()} Won the Game`);
     }
 }   
     const getOver = () => over;
     const reset = ()=> {
         over = false;
         round =1;
+        displayControl.setMessage(`${getActivePlayer().getName()}'s turn`);
     }
     return {getActivePlayer, playRound, getOver,reset};
 })();
 
+displayControl.setMessage(`${gameControl.getActivePlayer().getName()}'s turn`);
