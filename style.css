@@ -1,0 +1,54 @@
+@font-face {
+    font-family: fam1;
+    src: url(fonts/Kolker_Brush/KolkerBrush-Regular.ttf);
+}
+*{
+    margin:0;
+}
+body{
+    margin-top: 1vw;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: blue;
+    gap:6vh;
+}
+
+.header{
+    font-size: 100px;
+}
+
+.message{
+    font-size: 30px;
+}
+
+.grid{
+    display:grid;
+    grid-template:200px 200px 200px / 200px 200px 200px;
+    
+}
+.grid div{
+    border-style: groove;
+    border-color:white;
+    border-width: 1px;
+    font-family: fam1;
+    color:blue;
+    font-size: 160px;
+    text-align: center;
+}
+
+button{
+    color:blue;
+    background-color: black;
+    border-radius: 10px;
+    border-color: blue;
+    padding: 5px;
+}
+
+
+
+
+
+
