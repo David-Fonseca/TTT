@@ -6,39 +6,69 @@
     margin:0;
 }
 body{
-    margin-top: 1vw;
+    margin-top: 5vh;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: black;
     color: blue;
-    gap:6vh;
+    gap:4vh;
 }
 
 .header{
     font-size: 100px;
 }
 
-.message{
-    font-size: 30px;
+#message{
+    font-size: 80px;
 }
 
 .grid{
     display:grid;
     grid-template:200px 200px 200px / 200px 200px 200px;
-    
+    border: groove;
 }
 .grid div{
-    border-style: groove;
-    border-color:white;
+    border-style: none;
+    
     border-width: 1px;
     font-family: fam1;
     color:blue;
     font-size: 160px;
     text-align: center;
 }
-
+form, form div{
+    height: 100px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    
+}
+form{
+    gap:40px;
+}
+.grid div:hover{
+    background-color: grey;
+}
+input{
+    background-color: black;
+    color:blue;
+    border-style: none;
+    width:80px;
+    font-size: 20px;
+    border-radius: 10px;
+    height:40px;
+    text-align: center;
+    
+}
+input:hover{
+    color:white;
+    background-color: grey;
+}
+#p1Sign, #p2Sign{
+    width:10px;
+}
 button{
     color:blue;
     background-color: black;

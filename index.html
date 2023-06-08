@@ -9,8 +9,21 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="header">Tic-Tac-Toe</div>
-    <button id="restart">Restart</button>
+    <div class="header">
+        <form>
+            <div>
+                <input type="text" id="p1" value="player 1" maxlength="10">
+                <input type="text" id="p1Sign" value="x" maxlength="1">
+            </div>
+            <div>
+                <input type="text" id="p2" value="player 2" maxlength="10">
+                <input type="text" id="p2Sign" value="o" maxlength="1">
+            </div>
+            
+            
+        </form>
+    </div>
+    
     <div class="grid">
         <div class="field" data-index="0"></div>
         <div class="field" data-index="1"></div>
@@ -23,5 +36,6 @@
         <div class="field" data-index="8"></div>
     </div>
     <div id="message"></div>
+    <button id="restart">Restart</button>
 </body>
 </html>

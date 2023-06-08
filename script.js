@@ -20,59 +20,25 @@ const gameBoard = (() => {
     return {setField, getField, reset};
 })();
 
-const displayControl =(() => {
-    const gameGrid=document.querySelectorAll('.field');
-    const restartBtn = document.getElementById('restart');
-    const messageSlot = document.getElementById('message');
-    
-    gameGrid.forEach((field)=>field.addEventListener('click',(e)=>{
-        
-        if(gameControl.getOver()==true||e.target.textContent!=="") return;
-        gameControl.playRound(parseInt(e.target.dataset.index));
-        updateGameboard();
-        
-    }
-
-    ));
-
-    restartBtn.addEventListener('click', (e)=>{
-        gameBoard.reset();
-        gameControl.reset();
-        updateGameboard();
-    })
-
-    const updateGameboard=()=>{
-        for (let i = 0; i<gameGrid.length;i++){
-            gameGrid[i].textContent = gameBoard.getField(i);
-        }
-    }
-
-    const setResultMessage = (winner) =>{
-        console.log({winner});
-        if (winner === 'Draw'){
-            setMessage('Its a Draw');
-        }
-        else{
-            console.log('here')
-            setMessage(`Player: ${winner} won`);
-        }
-    }
-    const setMessage = (message)=>{
-        console.log({message})
-        messageSlot.textContent=message;
-    }
-    return {setResultMessage, setMessage};
-})();
-
 const gameControl =(()=>{
-    const player1 = Player('p1','x');
-    const player2 = Player('p2','o');
+    let player1;
+    let player2;
+
     let over =false;
     let round = 1;
     const horizontals = [[0,1,2],[3,4,5],[6,7,8]];
     const verticals = [[0,3,6],[1,4,7],[2,5,8]];
     const diagonals = [[0,4,8],[2,4,6]];
     const getActivePlayer = () =>{return round%2 == 1? player1:player2};
+
+    const setPlayerNames = () =>{   
+        let p1Name = document.getElementById('p1').value;
+        let p2Name = document.getElementById('p2').value;
+        let p1Sign = document.getElementById('p1Sign').value;
+        let p2Sign = document.getElementById('p2Sign').value;
+        player1 = Player(p1Name,p1Sign);
+        player2 = Player(p2Name,p2Sign);
+    }
 
     const playRound=(index)=>{
         gameBoard.setField(index, getActivePlayer().getSign());
@@ -145,7 +111,54 @@ const gameControl =(()=>{
         round =1;
         displayControl.setMessage(`${getActivePlayer().getName()}'s turn`);
     }
-    return {getActivePlayer, playRound, getOver,reset};
+    return {getActivePlayer, playRound, getOver,reset, setPlayerNames};
 })();
+
+const displayControl =(() => {
+    const gameGrid=document.querySelectorAll('.field');
+    const restartBtn = document.getElementById('restart');
+    const messageSlot = document.getElementById('message');
+    gameControl.setPlayerNames();
+
+    gameGrid.forEach((field)=>field.addEventListener('click',(e)=>{
+        gameControl.setPlayerNames();
+        if(gameControl.getOver()==true||e.target.textContent!=="") return;
+        gameControl.playRound(parseInt(e.target.dataset.index));
+        updateGameboard();
+        
+    }
+
+    ));
+
+    restartBtn.addEventListener('click', (e)=>{
+        gameBoard.reset();
+        gameControl.reset();
+        updateGameboard();
+    })
+
+    const updateGameboard=()=>{
+        for (let i = 0; i<gameGrid.length;i++){
+            gameGrid[i].textContent = gameBoard.getField(i);
+        }
+    }
+
+    const setResultMessage = (winner) =>{
+        console.log({winner});
+        if (winner === 'Draw'){
+            setMessage('Its a Draw');
+        }
+        else{
+            console.log('here')
+            setMessage(`Player: ${winner} won`);
+        }
+    }
+    const setMessage = (message)=>{
+        console.log({message})
+        messageSlot.textContent=message;
+    }
+    return {setResultMessage, setMessage};
+})();
+
+
 
 displayControl.setMessage(`${gameControl.getActivePlayer().getName()}'s turn`);
